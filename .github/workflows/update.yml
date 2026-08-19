@@ -1,0 +1,30 @@
+name: Update TDX sources
+
+on:
+  schedule:
+    - cron: "0 2 1,15 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-tdx-sources
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v30
+
+      - name: Run updater
+        run: ./update.sh
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update TDX sources"
+          file_pattern: sources.nix
