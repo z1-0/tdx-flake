@@ -26,7 +26,7 @@ Add to your flake:
 inputs.tdx.url = "github:z1-0/tdx-flake";
 ```
 
-**NixOS system-wide** (in `configuration.nix`):
+**NixOS system-wide**
 
 ```nix
 environment.systemPackages = [
@@ -34,7 +34,7 @@ environment.systemPackages = [
 ];
 ```
 
-**Home Manager** (in `home.nix`):
+**Home Manager**
 
 ```nix
 home.packages = [
