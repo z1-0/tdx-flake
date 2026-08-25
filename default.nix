@@ -113,7 +113,8 @@ let
       mkdir -p $out
       dpkg-deb --fsys-tarfile $src | tar -x -C $out
 
-      # CEF looks for locales/ next to the executable
+      chmod -R u+w $out
+
       mkdir -p $out/opt/apps/com.tdx.tdxcfv/files/bin/locales
       cp -n $out/opt/apps/com.tdx.tdxcfv/entries/locale/locales/*.pak \
         $out/opt/apps/com.tdx.tdxcfv/files/bin/locales/
@@ -158,10 +159,7 @@ buildFHSEnv {
 
     export XDG_DATA_HOME=''${XDG_DATA_HOME:-$HOME/.local/share}
 
-    # the wine-prefix-like data dir may be read-only from previous runs in the sandbox
-    if [ -d $XDG_DATA_HOME/tdxcfv ]; then
-      chmod -R u+w $XDG_DATA_HOME/tdxcfv 2>/dev/null || true
-    fi
+    chmod -R u+w $XDG_DATA_HOME/tdxcfv 2>/dev/null || true
 
     exec $basepath/tdxw.sh
   '';
